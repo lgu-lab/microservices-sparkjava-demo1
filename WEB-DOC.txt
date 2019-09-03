@@ -1,0 +1,4 @@
+
+
+https://www.baeldung.com/spark-framework-rest-api   REST API with JSON (GSON)
+
