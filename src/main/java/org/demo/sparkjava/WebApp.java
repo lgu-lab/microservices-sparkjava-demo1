@@ -3,13 +3,17 @@ package org.demo.sparkjava;
 import static spark.Spark.delete;
 import static spark.Spark.get;
 import static spark.Spark.options;
+import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.put;
+
+import java.util.Properties;
 
 import org.demo.sparkjava.handlers.foo.FooGet;
 import org.demo.sparkjava.handlers.foo.FooPost;
 import org.demo.sparkjava.handlers.smi.SmiTraitsGet;
 import org.demo.sparkjava.handlers.smi.SmiTraitsPost;
+import org.demo.sparkjava.util.Util;
 
 public class WebApp {
 
@@ -20,7 +24,26 @@ public class WebApp {
 		// (i.e. declaring a route or setting the port).
 		// You can also manually start the server by calling init().
 
-		// Default port is 4567
+		Util.log("Staring web server...");
+		Util.log("Current directory : " + Util.currentDirectory() );
+		
+		Properties prop = Util.loadProperties();
+		if ( prop != null ) {
+			Util.log("Setting specific configuration...");
+			String cfgPort = prop.getProperty("port");
+			if ( cfgPort != null ) {
+				// Set specific port
+				int iPort = Integer.parseInt(cfgPort);
+				// Default port is 4567
+				port(iPort);
+				Util.log("Port = " + iPort);
+			}
+		}
+		else {
+			Util.log("No specific configuration.");
+		}
+		
+		Util.log("Routes definition...");
 
 		// Test with : http://localhost:4567/hello
 		get("/hello", (request, response) -> "Hello World");

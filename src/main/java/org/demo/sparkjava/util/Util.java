@@ -1,6 +1,10 @@
 package org.demo.sparkjava.util;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
+import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -11,6 +15,10 @@ import org.xml.sax.InputSource;
 import spark.Request;
 
 public class Util {
+
+	public static final String currentDirectory() {
+		return System.getProperty("user.dir") ;
+	}
 
 	public static void log(String msg) {
 		System.out.println("[LOG] " + msg);
@@ -32,4 +40,16 @@ public class Util {
 		return "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" + xmlContent ;
 	}
 	
+    public static Properties loadProperties() {
+    	String filePath = currentDirectory() + "/config.properties" ;
+    	log("Configuration file : " + filePath);
+        try (InputStream input = new FileInputStream(filePath)) {
+            Properties prop = new Properties();
+            prop.load(input);
+            return prop ;
+        } catch (IOException ex) {
+        	log("Cannot read configuration file, IOException " + ex.getMessage() );
+            return null;
+        }
+    }
 }

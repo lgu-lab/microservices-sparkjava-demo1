@@ -51,7 +51,7 @@ public class SmiUtil {
 	public static final String loadXmlFile(String fileName) {
 		// load XML file
 		Util.log("loadXmlFile(" + fileName + ")");
-		String dir = currentDirectory() ;
+		String dir = Util.currentDirectory() ;
 		Util.log("dir = " + dir );
 		Path path = Paths.get(dir, "responses", fileName);
 		Util.log("file path = " + path );
@@ -66,7 +66,4 @@ public class SmiUtil {
 		return content ;
 	}
 	
-	public static final String currentDirectory() {
-		return System.getProperty("user.dir") ;
-	}
 }
